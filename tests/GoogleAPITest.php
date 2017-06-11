@@ -13,44 +13,33 @@ class GoogleAPITest extends TestCase
 {
     protected $api;
     protected $client;
-    protected $response;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->client = $this->getMockBuilder('Client')
-            ->setMethods(['post'])
-            ->getMock();
-        $this->response = $this->createMock(GuzzleHttp\Psr7\Response::class);
-        $this->api = new GoogleAPI($this->client, 'dkkdkd', 'dkkkdk');
+        $this->client = new \GuzzleHttp\Client();
+        $this->api = new GoogleAPI(
+            $this->client,
+            'https://www.googleapis.com/geolocation/v1/geolocate',
+            'AIzaSyBSzs52mxNyS9z3mYKElBVp1_LWYWh-V0I'
+        );
     }
 
     /** @test */
     public function it_returns_geo_data_of_a_bts_antenna()
     {
-        $expected='{ "location": { "lat": 36.8456427, "lng": 54.4393363 }, "accuracy": 79477.0 }';
-        $this->response->method('getBody')
-            ->willReturn($expected);
-        $this->client->method('post')
-            ->willReturn($this->response);
         $btsGeo = $this->api->getBTSLocation(28674837, 12550, 432, 11);
-        $this->assertJsonStringEqualsJsonString($expected, $btsGeo);
+        $this->assertArrayHasKey('lat', $btsGeo);
+        $this->assertArrayHasKey('long', $btsGeo);
+        $this->assertInternalType('float', $btsGeo['lat']);
+        $this->assertInternalType('float', $btsGeo['long']);
     }
 
     /** @test */
     public function it_throws_exception_if_bts_antenna_is_not_found()
     {
-        $expected = '{ "error": { "errors": [ '
-            . '{ "domain": "geolocation", "reason": "notFound", "message": "Not Found" }'
-            . ' ], "code": 404, "message": "Not Found" } }';
-        $this->response->method('getStatusCode')
-            ->willReturn(404);
-        $this->response->method('getBody')
-            ->willReturn($expected);
-        $this->client->method('post')
-            ->willReturn($this->response);
         $this->expectException('GLAWrapper\GLANotFoundException');
-        $btsGeo = $this->api->getBTSLocation(0,0,0,0);
+        $this->api->getBTSLocation(0,0,4321,0);
     }
 
     // todo: it returns geo location of a wifi router

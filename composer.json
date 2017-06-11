@@ -2,9 +2,11 @@
   "name": "fsalehpour/gla-wrapper",
   "description": "A wrapper for resolving BTS/WiFi data to geo location using Google's Location API",
   "type": "library",
+  "minimum-stability": "dev",
   "require": {
     "php": "^7.0",
-    "guzzlehttp/guzzle": "^6.2"
+    "guzzlehttp/guzzle": "^6.2",
+    "fsalehpour/bts-locator": "dev-master"
   },
   "license": "MIT",
   "authors": [

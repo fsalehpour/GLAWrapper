@@ -2,7 +2,10 @@
 
 namespace GLAWrapper;
 
-class GoogleAPI
+use FSalehpour\BTSLocator\BTSLocatorInterface;
+use GuzzleHttp\Exception\ClientException;
+
+class GoogleAPI implements BTSLocatorInterface
 {
     protected $apiUrl;
     protected $client;
@@ -27,11 +30,11 @@ class GoogleAPI
      * @param $lac
      * @param $mcc
      * @param $mnc
-     * @return object
+     * @return array
      */
     protected function makeBTSRequestParams($cid, $lac, $mcc, $mnc)
     {
-        return (object)[
+        return [
             'cellTowers' => [[
                 "cellId"            => $cid,
                 "locationAreaCode"  => $lac,
@@ -49,16 +52,26 @@ class GoogleAPI
 
     private function geoLocate($parameters)
     {
-        $response = $this->client->post($this->apiUrl . '?key=' . $this->apiKey, [
-            'body' => $parameters,
-            'headers' => [
-                'Content-Type' => 'application/json; charset=UTF-8'
-            ],
-        ]);
+        try {
+            $response = $this->client->post($this->apiUrl . '?key=' . $this->apiKey, [
+                'body'    => json_encode($parameters),
+                'headers' => [
+                    'Content-Type' => 'application/json; charset=UTF-8'
+                ],
+            ]);
 
-        $this->handleExceptions($response);
+            $this->handleExceptions($response);
 
-        return $response->getBody();
+            $result = json_decode($response->getBody(), true);
+            return [
+                'lat'  => $result['location']['lat'],
+                'long' => $result['location']['lng'],
+            ];
+        } catch (ClientException $e) {
+            $this->handleExceptions($e->getResponse());
+
+            throw $e;
+        }
     }
 
     private function handleExceptions($response)

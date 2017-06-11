@@ -8,9 +8,7 @@
 
 namespace GLAWrapper;
 
+use FSalehpour\BTSLocator\BTSLocatorException;
 use RuntimeException;
 
-class GLANotFoundException extends RuntimeException
-{
-
-}
+class GLANotFoundException extends RuntimeException implements BTSLocatorException { }

@@ -4,8 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6856491e774a10d07d844a9fae5aab55",
+    "content-hash": "564bb29e2a40a036fb4fee8175532e82",
     "packages": [
+        {
+            "name": "fsalehpour/bts-locator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fsalehpour/bts-locator.git",
+                "reference": "e2021087b3ec99975ba22d77fe09edb8bf71606d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fsalehpour/bts-locator/zipball/e2021087b3ec99975ba22d77fe09edb8bf71606d",
+                "reference": "e2021087b3ec99975ba22d77fe09edb8bf71606d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FSalehpour\\BTSLocator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Faramarz Salehpour",
+                    "email": "subs@marz.co"
+                }
+            ],
+            "description": "Common interfaces for BTS locators",
+            "time": "2017-06-11 20:28:22"
+        },
         {
             "name": "guzzlehttp/guzzle",
             "version": "6.2.3",
@@ -1687,8 +1723,10 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "fsalehpour/bts-locator": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
