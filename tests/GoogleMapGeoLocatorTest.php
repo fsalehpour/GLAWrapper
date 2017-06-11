@@ -6,10 +6,11 @@
  * Time: 15:28
  */
 
-use GLAWrapper\GoogleAPI;
+use FSalehpour\GoogleMapsGeolocationAPI\GoogleMapsGeoLocator;
+use FSalehpour\GoogleMapsGeolocationAPI\GoogleMapsGeoLocatorException;
 use PHPUnit\Framework\TestCase;
 
-class GoogleAPITest extends TestCase
+class GoogleMapGeoLocatorTest extends TestCase
 {
     protected $api;
     protected $client;
@@ -18,7 +19,7 @@ class GoogleAPITest extends TestCase
     {
         parent::setUp();
         $this->client = new \GuzzleHttp\Client();
-        $this->api = new GoogleAPI(
+        $this->api = new GoogleMapsGeoLocator(
             $this->client,
             'https://www.googleapis.com/geolocation/v1/geolocate',
             'AIzaSyBSzs52mxNyS9z3mYKElBVp1_LWYWh-V0I'
@@ -38,7 +39,7 @@ class GoogleAPITest extends TestCase
     /** @test */
     public function it_throws_exception_if_bts_antenna_is_not_found()
     {
-        $this->expectException('GLAWrapper\GLANotFoundException');
+        $this->expectException(GoogleMapsGeoLocatorException::class);
         $this->api->getBTSLocation(0,0,4321,0);
     }
 

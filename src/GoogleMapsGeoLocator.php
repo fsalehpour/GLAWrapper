@@ -1,11 +1,11 @@
 <?php
 
-namespace GLAWrapper;
+namespace FSalehpour\GoogleMapsGeolocationAPI;
 
 use FSalehpour\BTSLocator\BTSLocatorInterface;
 use GuzzleHttp\Exception\ClientException;
 
-class GoogleAPI implements BTSLocatorInterface
+class GoogleMapsGeoLocator implements BTSLocatorInterface
 {
     protected $apiUrl;
     protected $client;
@@ -79,7 +79,7 @@ class GoogleAPI implements BTSLocatorInterface
         $statusCode = $response->getStatusCode();
 
         if ($statusCode == 404) {
-            throw new GLANotFoundException();
+            throw new GoogleMapsGeoLocatorException();
         }
     }
 }

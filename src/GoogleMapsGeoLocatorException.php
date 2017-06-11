@@ -6,9 +6,9 @@
  * Time: 10:07
  */
 
-namespace GLAWrapper;
+namespace FSalehpour\GoogleMapsGeolocationAPI;
 
 use FSalehpour\BTSLocator\BTSLocatorException;
 use RuntimeException;
 
-class GLANotFoundException extends RuntimeException implements BTSLocatorException { }
+class GoogleMapsGeoLocatorException extends RuntimeException implements BTSLocatorException { }
